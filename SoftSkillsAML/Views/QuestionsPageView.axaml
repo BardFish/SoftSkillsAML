@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="SoftSkillsAML.QuestionsPageView"
+             xmlns:vm="using:SoftSkillsAML.ViewModels"
+             x:DataType="vm:QuestionsPageViewModel">
+  <Grid Margin="16" RowDefinitions="Auto,Auto,*">
+    <TextBlock Text="{Binding DepartmentName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+      <Button Content="Открыть задание" Command="{Binding OpenQuestion}"/>
+      <Button Content="Назад к направлениям" Command="{Binding BackToDepartments}"/>
+    </StackPanel>
+
+    <ListBox Grid.Row="2" ItemsSource="{Binding Questions}" SelectedItem="{Binding SelectedQuestion}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Border BorderBrush="#DDD" BorderThickness="1" Padding="8" Margin="0,0,0,8">
+            <StackPanel>
+              <TextBlock Text="{Binding QuestionNavigation.Text}" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding IsAnswered, StringFormat=Статус: {0}}"/>
+            </StackPanel>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </Grid>
+</UserControl>
