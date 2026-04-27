@@ -13,7 +13,7 @@ namespace SoftSkillsAML.ViewModels
 {
     internal class RegPageViewModel: ViewModelBase
     {
-        User _newUser = new User() { Birthday = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day), IsAdmin = true, };
+        User _newUser = new User() { Birthday = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day) };
 
         public User NewUser
         {
