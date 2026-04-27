@@ -11,12 +11,31 @@ namespace SoftSkillsAML.ViewModels
 
         public StatisticPageViewModel()
         {
+            var departments = MainWindowViewModel.db.Departments.ToList();
+            var users = MainWindowViewModel.db.Users.Where(u => !u.IsAdmin).Select(u => u.Id).ToList();
+            var questions = MainWindowViewModel.db.Questions.Select(q => new { q.Id, q.Department }).ToList();
+            var answered = MainWindowViewModel.db.UserQuestions
+                .Where(uq => uq.IsAnswered)
+                .Select(uq => new { uq.User, uq.Question })
+                .ToList();
+
             DepartmentConversion = new ObservableCollection<DepartmentConversionItem>(
-                MainWindowViewModel.db.Departments.Select(d => new DepartmentConversionItem
+                departments.Select(d =>
                 {
-                    DepartmentName = d.Name,
-                    Started = MainWindowViewModel.db.Users.Count(u => !u.IsAdmin && MainWindowViewModel.db.UserQuestions.Any(uq => uq.User == u.Id && uq.QuestionNavigation.Department == d.Id && uq.IsAnswered)),
-                    Completed = MainWindowViewModel.db.Users.Count(u => !u.IsAdmin && IsDepartmentCompleted(u.Id, d.Id))
+                    var departmentQuestionIds = questions.Where(q => q.Department == d.Id).Select(q => q.Id).ToList();
+
+                    var started = users.Count(userId => answered.Any(a => a.User == userId && departmentQuestionIds.Contains(a.Question)));
+
+                    var completed = users.Count(userId =>
+                        departmentQuestionIds.Count > 0 &&
+                        departmentQuestionIds.All(questionId => answered.Any(a => a.User == userId && a.Question == questionId)));
+
+                    return new DepartmentConversionItem
+                    {
+                        DepartmentName = d.Name,
+                        Started = started,
+                        Completed = completed
+                    };
                 }).ToList());
 
             SkillsAverages = new ObservableCollection<SkillAverageItem>(
@@ -25,14 +44,6 @@ namespace SoftSkillsAML.ViewModels
                     SkillName = s.Name,
                     Average = MainWindowViewModel.db.UserSoftSkills.Where(us => us.SoftSkill == s.Id).Select(us => (double?)us.Points).Average() ?? 0
                 }).ToList());
-        }
-
-        private static bool IsDepartmentCompleted(int userId, int depId)
-        {
-            var total = MainWindowViewModel.db.Questions.Count(q => q.Department == depId);
-            if (total == 0) return false;
-            var done = MainWindowViewModel.db.UserQuestions.Count(uq => uq.User == userId && uq.QuestionNavigation.Department == depId && uq.IsAnswered);
-            return done == total;
         }
 
         public void OpenUsers() => MainWindowViewModel.Instance.Page = new AdminUsersPageView();
