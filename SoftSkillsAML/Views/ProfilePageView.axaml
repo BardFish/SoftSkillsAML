@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SoftSkillsAML.ViewModels"
+             xmlns:conv="using:SoftSkillsAML.Converters"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650"
+             x:Class="SoftSkillsAML.ProfilePageView"
+             x:DataType="vm:ProfilePageViewModel">
+  <UserControl.Resources>
+    <conv:BytesToImageConverter x:Key="BytesToImageConverter"/>
+  </UserControl.Resources>
+
+  <ScrollViewer>
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+      <TextBlock Text="Личный кабинет" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+      <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+        <Button Content="Сохранить данные" Command="{Binding SaveProfile}"/>
+        <Button Content="Назад к направлениям" Command="{Binding BackToDepartments}"/>
+      </StackPanel>
+
+      <GroupBox Grid.Row="2" Header="Персональные данные" Margin="0,0,0,12">
+        <StackPanel Spacing="8" Margin="8">
+          <TextBlock Text="Логин"/>
+          <TextBox Text="{Binding User.Login}"/>
+          <TextBlock Text="Дата рождения"/>
+          <CalendarDatePicker SelectedDate="{Binding User.Birthday}"/>
+          <TextBlock Text="Пол"/>
+          <ComboBox ItemsSource="{Binding Genders}" SelectedItem="{Binding SelectedGender}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate><TextBlock Text="{Binding Name}"/></DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox Grid.Row="3" Header="Текущий уровень софт-скилов" Margin="0,0,0,12">
+        <ItemsControl ItemsSource="{Binding Skills}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding SoftSkillNavigation.Name, StringFormat={}{0}: }">
+                <Run Text="{Binding Points}"/>
+              </TextBlock>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </GroupBox>
+
+      <GroupBox Grid.Row="4" Header="Достижения" Margin="0,0,0,12">
+        <ItemsControl ItemsSource="{Binding Achievements}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Border BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,8" Padding="8">
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                  <Image Width="80" Height="80" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}"/>
+                  <StackPanel>
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="700"/>
+                    <TextBlock Text="{Binding Status, StringFormat=Статус: {0}}"/>
+                  </StackPanel>
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </GroupBox>
+
+      <GroupBox Grid.Row="5" Header="Прогресс по направлениям">
+        <ItemsControl ItemsSource="{Binding ProgressByDepartments}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding DepartmentName, StringFormat={}{0}: }">
+                <Run Text="{Binding ProgressPercent}"/>
+                <Run Text="%"/>
+              </TextBlock>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </GroupBox>
+    </Grid>
+  </ScrollViewer>
+</UserControl>
