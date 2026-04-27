@@ -19,8 +19,9 @@
         <Button Content="Назад к направлениям" Command="{Binding BackToDepartments}"/>
       </StackPanel>
 
-      <GroupBox Grid.Row="2" Header="Персональные данные" Margin="0,0,0,12">
-        <StackPanel Spacing="8" Margin="8">
+      <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
+        <StackPanel Spacing="8">
+          <TextBlock Text="Персональные данные" FontSize="16" FontWeight="SemiBold"/>
           <TextBlock Text="Логин"/>
           <TextBox Text="{Binding User.Login}"/>
           <TextBlock Text="Дата рождения"/>
@@ -32,51 +33,60 @@
             </ComboBox.ItemTemplate>
           </ComboBox>
         </StackPanel>
-      </GroupBox>
+      </Border>
 
-      <GroupBox Grid.Row="3" Header="Текущий уровень софт-скилов" Margin="0,0,0,12">
-        <ItemsControl ItemsSource="{Binding Skills}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding SoftSkillNavigation.Name, StringFormat={}{0}: }">
-                <Run Text="{Binding Points}"/>
-              </TextBlock>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </GroupBox>
+      <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
+        <StackPanel>
+          <TextBlock Text="Текущий уровень софт-скилов" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+          <ItemsControl ItemsSource="{Binding Skills}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding SoftSkillNavigation.Name, StringFormat={}{0}: }">
+                  <Run Text="{Binding Points}"/>
+                </TextBlock>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
 
-      <GroupBox Grid.Row="4" Header="Достижения" Margin="0,0,0,12">
-        <ItemsControl ItemsSource="{Binding Achievements}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <Border BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,8" Padding="8">
-                <StackPanel Orientation="Horizontal" Spacing="12">
-                  <Image Width="80" Height="80" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}"/>
-                  <StackPanel>
-                    <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="700"/>
-                    <TextBlock Text="{Binding Status, StringFormat=Статус: {0}}"/>
+      <Border Grid.Row="4" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
+        <StackPanel>
+          <TextBlock Text="Достижения" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+          <ItemsControl ItemsSource="{Binding Achievements}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,8" Padding="8">
+                  <StackPanel Orientation="Horizontal" Spacing="12">
+                    <Image Width="80" Height="80" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}"/>
+                    <StackPanel>
+                      <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                      <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="700"/>
+                      <TextBlock Text="{Binding Status, StringFormat=Статус: {0}}"/>
+                    </StackPanel>
                   </StackPanel>
-                </StackPanel>
-              </Border>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </GroupBox>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
 
-      <GroupBox Grid.Row="5" Header="Прогресс по направлениям">
-        <ItemsControl ItemsSource="{Binding ProgressByDepartments}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding DepartmentName, StringFormat={}{0}: }">
-                <Run Text="{Binding ProgressPercent}"/>
-                <Run Text="%"/>
-              </TextBlock>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </GroupBox>
+      <Border Grid.Row="5" BorderBrush="#DDD" BorderThickness="1" Padding="10">
+        <StackPanel>
+          <TextBlock Text="Прогресс по направлениям" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+          <ItemsControl ItemsSource="{Binding ProgressByDepartments}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding DepartmentName, StringFormat={}{0}: }">
+                  <Run Text="{Binding ProgressPercent}"/>
+                  <Run Text="%"/>
+                </TextBlock>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
     </Grid>
   </ScrollViewer>
 </UserControl>

@@ -16,33 +16,39 @@
         <Button Content="Выйти" Command="{Binding Logout}"/>
       </StackPanel>
 
-      <GroupBox Grid.Row="2" Header="Конверсия по направлениям" Margin="0,0,0,12">
-        <ItemsControl ItemsSource="{Binding DepartmentConversion}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <TextBlock>
-                <Run Text="{Binding DepartmentName}"/>
-                <Run Text=": начали "/>
-                <Run Text="{Binding Started}"/>
-                <Run Text=", завершили "/>
-                <Run Text="{Binding Completed}"/>
-              </TextBlock>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </GroupBox>
+      <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
+        <StackPanel>
+          <TextBlock Text="Конверсия по направлениям" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+          <ItemsControl ItemsSource="{Binding DepartmentConversion}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock>
+                  <Run Text="{Binding DepartmentName}"/>
+                  <Run Text=": начали "/>
+                  <Run Text="{Binding Started}"/>
+                  <Run Text=", завершили "/>
+                  <Run Text="{Binding Completed}"/>
+                </TextBlock>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
 
-      <GroupBox Grid.Row="3" Header="Средние показатели навыков">
-        <ItemsControl ItemsSource="{Binding SkillsAverages}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding SkillName, StringFormat={}{0}: }">
-                <Run Text="{Binding Average, StringFormat={}{0:F2}}"/>
-              </TextBlock>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </GroupBox>
+      <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" Padding="10">
+        <StackPanel>
+          <TextBlock Text="Средние показатели навыков" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+          <ItemsControl ItemsSource="{Binding SkillsAverages}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding SkillName, StringFormat={}{0}: }">
+                  <Run Text="{Binding Average, StringFormat={}{0:F2}}"/>
+                </TextBlock>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
     </Grid>
   </ScrollViewer>
 </UserControl>
