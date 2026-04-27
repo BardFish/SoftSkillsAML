@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="SoftSkillsAML.AdminUserProfilePageView"
+             xmlns:vm="using:SoftSkillsAML.ViewModels"
+             x:DataType="vm:AdminUserProfilePageViewModel">
+  <Grid Margin="16" RowDefinitions="Auto,Auto,*">
+    <TextBlock Text="Профиль игрока" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+    <StackPanel Grid.Row="1" Margin="0,0,0,12">
+      <TextBlock Text="{Binding User.Login, StringFormat=Логин: {0}}"/>
+      <TextBlock Text="{Binding User.Birthday, StringFormat=Дата рождения: {0:dd.MM.yyyy}}"/>
+      <TextBlock Text="{Binding User.IsBlocked, StringFormat=Заблокирован: {0}}"/>
+      <Button Content="Назад" Command="{Binding BackToUsers}" HorizontalAlignment="Left" Margin="0,8,0,0"/>
+    </StackPanel>
+    <GroupBox Grid.Row="2" Header="Софт-скилы">
+      <ItemsControl ItemsSource="{Binding Skills}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding SoftSkillNavigation.Name, StringFormat={}{0}: }">
+              <Run Text="{Binding Points}"/>
+            </TextBlock>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </GroupBox>
+  </Grid>
+</UserControl>
