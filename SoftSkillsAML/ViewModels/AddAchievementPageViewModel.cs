@@ -9,6 +9,8 @@ namespace SoftSkillsAML.ViewModels
     {
         string _name = string.Empty;
         string _description = string.Empty;
+        byte[] _imageBytes = [];
+        string _imageFileName = "Файл не выбран";
 
         public string Name
         {
@@ -20,6 +22,18 @@ namespace SoftSkillsAML.ViewModels
         {
             get => _description;
             set => this.RaiseAndSetIfChanged(ref _description, value);
+        }
+
+        public string ImageFileName
+        {
+            get => _imageFileName;
+            set => this.RaiseAndSetIfChanged(ref _imageFileName, value);
+        }
+
+        public void SetImage(byte[] imageBytes, string fileName)
+        {
+            _imageBytes = imageBytes;
+            ImageFileName = fileName;
         }
 
         public async void AddAchievement()
@@ -35,7 +49,7 @@ namespace SoftSkillsAML.ViewModels
             {
                 Name = Name,
                 Description = Description,
-                Image = []
+                Image = _imageBytes
             });
             MainWindowViewModel.db.SaveChanges();
 
@@ -43,6 +57,8 @@ namespace SoftSkillsAML.ViewModels
             await ok.ShowAsync();
             Name = string.Empty;
             Description = string.Empty;
+            _imageBytes = [];
+            ImageFileName = "Файл не выбран";
         }
 
         public void BackToStat() => MainWindowViewModel.Instance.Page = new StatisticPageView();
