@@ -11,7 +11,5 @@ public partial class Department
 
     public int Id { get; set; }
 
-    public int Department1 { get; set; }
-
     public virtual ICollection<Question> Questions { get; set; } = new List<Question>();
 }
