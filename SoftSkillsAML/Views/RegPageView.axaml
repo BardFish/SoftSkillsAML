@@ -1,0 +1,38 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="SoftSkillsAML.RegPageView"
+			 xmlns:vm="using:SoftSkillsAML.ViewModels"
+			 x:DataType="vm:RegPageViewModel"
+			 xmlns:conv="using:SoftSkillsAML.Converters">
+	<UserControl.Resources>
+		<conv:AssetsImageConverter x:Key="AIC"/>
+	</UserControl.Resources>
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+		<TextBlock Text="Регистрация" HorizontalAlignment="Center"/>
+		<TextBox Text="{Binding NewUser.Login}" Watermark="Логин"/>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+			<TextBox Text="{Binding Password}" Watermark="Пароль" PasswordChar="*" RevealPassword="{Binding IsPasswordVisible}" HorizontalAlignment="Stretch"/>
+			<Button Command="{Binding ChangePasswordVisibility}">
+				<Image Source="{Binding Eye, Converter={StaticResource AIC}}" Height="20"/>
+			</Button>
+		</StackPanel>
+		<ComboBox ItemsSource="{Binding Genders}" SelectedItem="{Binding NewUser.GenderNavigation}" PlaceholderText="Пол" HorizontalAlignment="Stretch">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Name}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<CalendarDatePicker SelectedDate="{Binding NewUser.Birthday}" Watermark="дд.мм.гггг"/>
+		
+		<Button Content="Создать аккаунт" HorizontalAlignment="Center" Command="{Binding Reg}"/>
+		<TextBlock Text="Уже есть аккаунт?">
+			<InlineUIContainer>
+				<HyperlinkButton Content="Войти" Command="{Binding ToAuth}"/>
+			</InlineUIContainer>
+		</TextBlock>
+	</StackPanel>
+</UserControl>
