@@ -19,7 +19,7 @@
 				<Image Source="{Binding Eye, Converter={StaticResource AIC}}" Height="20"/>
 			</Button>
 		</StackPanel>
-		<ComboBox ItemsSource="{Binding Genders}" SelectedItem="{Binding NewUser.GenderNavigation}" PlaceholderText="Пол" HorizontalAlignment="Stretch">
+		<ComboBox ItemsSource="{Binding Genders}" SelectedItem="{Binding SelectedGender}" PlaceholderText="Пол" HorizontalAlignment="Stretch">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Name}"/>
