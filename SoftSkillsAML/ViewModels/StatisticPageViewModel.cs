@@ -30,7 +30,7 @@ namespace SoftSkillsAML.ViewModels
 
             SkillsAverages = new ObservableCollection<ChartPercentItem>(MainWindowViewModel.db.SoftSkills.ToList().Select(s =>
             {
-                var avg = MainWindowViewModel.db.UserSoftSkills.Where(us => us.SoftSkill == s.Id).Select(us => (double?)us.Points).Average() ?? 0;
+                var avg = MainWindowViewModel.db.UserSoftSkills.Where(us => us.SoftSkill == s.Id && !us.UserNavigation.IsAdmin).Select(us => (double?)us.Points).Average() ?? 0;
                 var percent = s.MaxPoints == 0 ? 0 : (int)System.Math.Round(avg * 100.0 / s.MaxPoints);
                 return new ChartPercentItem { Name = s.Name, Percent = percent };
             }).ToList());
