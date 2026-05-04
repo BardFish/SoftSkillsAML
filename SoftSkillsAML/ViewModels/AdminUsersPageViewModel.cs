@@ -1,8 +1,4 @@
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
 using ReactiveUI;
-using SkiaSharp;
 using SoftSkillsAML.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -28,8 +24,6 @@ namespace SoftSkillsAML.ViewModels
         }
 
         public ObservableCollection<AdminUserListItem> Users { get; } = new();
-        public ISeries[] AgeDistributionSeries { get; private set; } = [];
-        public Axis[] AgeDistributionXAxes { get; private set; } = [];
 
         AdminUserListItem? _selectedUser;
         public AdminUserListItem? SelectedUser
@@ -41,7 +35,6 @@ namespace SoftSkillsAML.ViewModels
         public AdminUsersPageViewModel()
         {
             ApplyFilters();
-            BuildAgeDistribution();
         }
 
         public void ApplyFilters()
@@ -69,32 +62,6 @@ namespace SoftSkillsAML.ViewModels
             }
         }
 
-        private void BuildAgeDistribution()
-        {
-            var usersAges = MainWindowViewModel.db.Users.Where(x => !x.IsAdmin).ToList().Select(x => GetAge(x.Birthday));
-            var values = Enumerable.Range(0, 101).Select(age => usersAges.Count(a => a == age)).ToArray();
-
-            AgeDistributionSeries =
-            [
-                new ColumnSeries<int>
-                {
-                    Values = values,
-                    Name = "Количество пользователей"
-                }
-            ];
-
-            AgeDistributionXAxes =
-            [
-                new Axis
-                {
-                    Labels = Enumerable.Range(0, 101).Select(x => x.ToString()).ToArray(),
-                    LabelsRotation = 90,
-                    TextSize = 10,
-                    SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200))
-                }
-            ];
-        }
-
         private static int GetAge(DateTime birthday)
         {
             var today = DateTime.Today;
@@ -118,7 +85,6 @@ namespace SoftSkillsAML.ViewModels
             user.IsBlocked = !user.IsBlocked;
             MainWindowViewModel.db.SaveChanges();
             ApplyFilters();
-            BuildAgeDistribution();
         }
 
         public void OpenProfile()
