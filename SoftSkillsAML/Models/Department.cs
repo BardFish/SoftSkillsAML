@@ -13,5 +13,7 @@ public partial class Department
 
     public int Department1 { get; set; }
 
+    public byte[]? Image { get; set; }
+
     public virtual ICollection<Question> Questions { get; set; } = new List<Question>();
 }
