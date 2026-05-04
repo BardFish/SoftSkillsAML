@@ -15,6 +15,8 @@ public partial class Question
 
     public int Department { get; set; }
 
+    public int NumberInDepartment { get; set; }
+
     public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
     public virtual Department DepartmentNavigation { get; set; } = null!;
