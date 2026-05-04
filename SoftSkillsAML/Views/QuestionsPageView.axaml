@@ -14,10 +14,11 @@
     </StackPanel>
 
     <ListBox Grid.Row="2" ItemsSource="{Binding Questions}" SelectedItem="{Binding SelectedQuestion}">
+      <ListBox.ItemsPanel><ItemsPanelTemplate><WrapPanel Orientation="Horizontal" ItemWidth="420"/></ItemsPanelTemplate></ListBox.ItemsPanel>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <Border BorderBrush="#DDD" BorderThickness="1" Padding="8" Margin="0,0,0,8">
-            <StackPanel>
+          <Border BorderBrush="#DDD" BorderThickness="1" Padding="8" Margin="6">
+            <StackPanel Width="390">
               <TextBlock Text="{Binding QuestionNavigation.Text}" TextWrapping="Wrap"/>
               <TextBlock Text="{Binding IsAnswered, StringFormat=Статус: {0}}"/>
             </StackPanel>

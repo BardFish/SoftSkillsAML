@@ -2,32 +2,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             xmlns:conv="using:SoftSkillsAML.Converters"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
              x:Class="SoftSkillsAML.AdminUserProfilePageView"
              xmlns:vm="using:SoftSkillsAML.ViewModels"
              x:DataType="vm:AdminUserProfilePageViewModel">
-  <Grid Margin="16" RowDefinitions="Auto,Auto,*">
+  <UserControl.Resources>
+    <conv:BytesToImageConverter x:Key="BytesToImageConverter"/>
+    <conv:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+  </UserControl.Resources>
+  <ScrollViewer><Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,*">
     <TextBlock Text="Профиль игрока" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
     <StackPanel Grid.Row="1" Margin="0,0,0,12">
       <TextBlock Text="{Binding User.Login, StringFormat=Логин: {0}}"/>
       <TextBlock Text="{Binding User.Birthday, StringFormat=Дата рождения: {0:dd.MM.yyyy}}"/>
+      <TextBlock Text="{Binding GenderName, StringFormat=Пол: {0}}"/>
       <TextBlock Text="{Binding User.IsBlocked, StringFormat=Заблокирован: {0}}"/>
       <Button Content="Назад" Command="{Binding BackToUsers}" HorizontalAlignment="Left" Margin="0,8,0,0"/>
     </StackPanel>
-
-    <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10">
-      <StackPanel>
-        <TextBlock Text="Софт-скилы" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
-        <ItemsControl ItemsSource="{Binding Skills}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding SoftSkillNavigation.Name, StringFormat={}{0}: }">
-                <Run Text="{Binding Points}"/>
-              </TextBlock>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </StackPanel>
-    </Border>
-  </Grid>
+    <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12"><StackPanel><TextBlock Text="Софт-скилы" FontSize="16" FontWeight="SemiBold"/><ItemsControl ItemsSource="{Binding SkillCharts}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><StackPanel Width="230" Margin="6"><TextBlock Text="{Binding Name}"/><lvc:PieChart Series="{Binding Series}" Height="160"/><TextBlock Text="{Binding Percent, StringFormat={}{0}%}" HorizontalAlignment="Center"/></StackPanel></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel></Border>
+    <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12"><StackPanel><TextBlock Text="Прогресс по направлениям" FontSize="16" FontWeight="SemiBold"/><ItemsControl ItemsSource="{Binding ProgressCharts}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><StackPanel Width="230" Margin="6"><TextBlock Text="{Binding Name}"/><lvc:PieChart Series="{Binding Series}" Height="160"/><TextBlock Text="{Binding Percent, StringFormat={}{0}%}" HorizontalAlignment="Center"/></StackPanel></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel></Border>
+    <Border Grid.Row="4" BorderBrush="#DDD" BorderThickness="1" Padding="10"><StackPanel><TextBlock Text="Достижения" FontSize="16" FontWeight="SemiBold"/><ItemsControl ItemsSource="{Binding Achievements}"><ItemsControl.ItemTemplate><DataTemplate><Border BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,8" Padding="8"><StackPanel Orientation="Horizontal" Spacing="12"><Image Width="80" Height="80" Opacity="{Binding IsCompleted, Converter={StaticResource BoolToOpacityConverter}}" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}"/><StackPanel><TextBlock Text="{Binding Name}" FontWeight="Bold"/><TextBlock Text="{Binding Description}"/><TextBlock Text="{Binding Status}"/></StackPanel></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel></Border>
+  </Grid></ScrollViewer>
 </UserControl>

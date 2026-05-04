@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650"
              x:Class="SoftSkillsAML.StatisticPageView"
              xmlns:vm="using:SoftSkillsAML.ViewModels"
@@ -16,39 +17,13 @@
         <Button Content="Выйти" Command="{Binding Logout}"/>
       </StackPanel>
 
-      <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
-        <StackPanel>
-          <TextBlock Text="Конверсия по направлениям" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
-          <ItemsControl ItemsSource="{Binding DepartmentConversion}">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <TextBlock>
-                  <Run Text="{Binding DepartmentName}"/>
-                  <Run Text=": начали "/>
-                  <Run Text="{Binding Started}"/>
-                  <Run Text=", завершили "/>
-                  <Run Text="{Binding Completed}"/>
-                </TextBlock>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </StackPanel>
-      </Border>
+      <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12"><StackPanel><TextBlock Text="Конверсия по направлениям" FontSize="16" FontWeight="SemiBold"/>
+        <ItemsControl ItemsSource="{Binding DepartmentConversion}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><StackPanel Width="240" Margin="6"><TextBlock Text="{Binding Name}"/><lvc:PieChart Series="{Binding Series}" Height="170"/><TextBlock Text="{Binding Percent, StringFormat={}{0}%}" HorizontalAlignment="Center"/></StackPanel></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+      </StackPanel></Border>
 
-      <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" Padding="10">
-        <StackPanel>
-          <TextBlock Text="Средние показатели навыков" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
-          <ItemsControl ItemsSource="{Binding SkillsAverages}">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <TextBlock Text="{Binding SkillName, StringFormat={}{0}: }">
-                  <Run Text="{Binding Average, StringFormat={}{0:F2}}"/>
-                </TextBlock>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </StackPanel>
-      </Border>
+      <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" Padding="10"><StackPanel><TextBlock Text="Средние показатели навыков" FontSize="16" FontWeight="SemiBold"/>
+        <ItemsControl ItemsSource="{Binding SkillsAverages}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><StackPanel Width="240" Margin="6"><TextBlock Text="{Binding Name}"/><lvc:PieChart Series="{Binding Series}" Height="170"/><TextBlock Text="{Binding Percent, StringFormat={}{0}%}" HorizontalAlignment="Center"/></StackPanel></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+      </StackPanel></Border>
     </Grid>
   </ScrollViewer>
 </UserControl>

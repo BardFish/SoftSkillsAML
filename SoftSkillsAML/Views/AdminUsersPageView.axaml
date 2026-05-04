@@ -16,19 +16,13 @@
       <Button Content="Профиль игрока" Command="{Binding OpenProfile}"/>
       <Button Content="Назад" Command="{Binding BackToStat}"/>
     </StackPanel>
-    <ListBox Grid.Row="2" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <Border BorderBrush="#DDD" BorderThickness="1" Padding="8" Margin="0,0,0,8">
-            <TextBlock>
-              <Run Text="{Binding Login}"/>
-              <Run Text=" | возраст: "/><Run Text="{Binding Age}"/>
-              <Run Text=" | прогресс: "/><Run Text="{Binding Progress}"/><Run Text="%"/>
-              <Run Text=" | блок: "/><Run Text="{Binding IsBlocked}"/>
-            </TextBlock>
-          </Border>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+    <DataGrid Grid.Row="2" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
+        <DataGridTextColumn Header="Возраст" Binding="{Binding Age}"/>
+        <DataGridTextColumn Header="Прогресс, %" Binding="{Binding Progress}"/>
+        <DataGridCheckBoxColumn Header="Заблокирован" Binding="{Binding IsBlocked}"/>
+      </DataGrid.Columns>
+    </DataGrid>
   </Grid>
 </UserControl>
