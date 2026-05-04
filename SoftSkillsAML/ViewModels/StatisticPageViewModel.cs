@@ -1,5 +1,7 @@
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using SoftSkillsAML.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace SoftSkillsAML.ViewModels
     {
         public ObservableCollection<ChartPercentItem> DepartmentConversion { get; }
         public ObservableCollection<ChartPercentItem> SkillsAverages { get; }
+        public ISeries[] AgeDistributionSeries { get; private set; } = [];
+        public Axis[] AgeDistributionXAxes { get; private set; } = [];
 
         public StatisticPageViewModel()
         {
@@ -35,6 +39,25 @@ namespace SoftSkillsAML.ViewModels
                 return new ChartPercentItem { Name = s.Name, Percent = percent };
             }).ToList());
             foreach (var c in SkillsAverages) c.BuildSeries();
+
+            BuildAgeDistribution();
+        }
+
+        private void BuildAgeDistribution()
+        {
+            var usersAges = MainWindowViewModel.db.Users.Where(x => !x.IsAdmin).ToList().Select(x => GetAge(x.Birthday));
+            var values = Enumerable.Range(0, 101).Select(age => usersAges.Count(a => a == age)).ToArray();
+
+            AgeDistributionSeries = [new ColumnSeries<int> { Values = values, Name = "Количество пользователей" }];
+            AgeDistributionXAxes = [new Axis { Labels = Enumerable.Range(0, 101).Select(x => x.ToString()).ToArray(), LabelsRotation = 90, TextSize = 10, SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)) }];
+        }
+
+        private static int GetAge(System.DateTime birthday)
+        {
+            var today = System.DateTime.Today;
+            var age = today.Year - birthday.Year;
+            if (birthday.Date > today.AddYears(-age)) age--;
+            return System.Math.Clamp(age, 0, 100);
         }
 
         public void OpenUsers() => MainWindowViewModel.Instance.Page = new AdminUsersPageView();
