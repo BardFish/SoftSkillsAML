@@ -74,7 +74,7 @@ namespace SoftSkillsAML.ViewModels
             }
             if (!string.IsNullOrWhiteSpace(NewPassword))
             {
-                if (User.Password != MD5.HashData(Encoding.ASCII.GetBytes(OldPassword)))
+                if (!User.Password.SequenceEqual(MD5.HashData(Encoding.ASCII.GetBytes(OldPassword))))
                 {
                     await MessageBoxManager.GetMessageBoxStandard("Ошибка", "Старый пароль введен неверно", ButtonEnum.Ok, Icon.Info).ShowAsync(); return;
                 }
