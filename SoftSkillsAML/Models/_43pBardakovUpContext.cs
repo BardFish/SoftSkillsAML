@@ -115,6 +115,7 @@ public partial class _43pBardakovUpContext : DbContext
             entity.Property(e => e.Description)
                 .HasColumnType("character varying")
                 .HasColumnName("description");
+            entity.Property(e => e.Image).HasColumnName("image");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
@@ -144,6 +145,7 @@ public partial class _43pBardakovUpContext : DbContext
             entity.Property(e => e.Department).HasColumnName("department");
             entity.Property(e => e.HasImage).HasColumnName("has_image");
             entity.Property(e => e.Image).HasColumnName("image");
+            entity.Property(e => e.NumberInDepartment).HasColumnName("number_in_department");
             entity.Property(e => e.Text)
                 .HasColumnType("character varying")
                 .HasColumnName("text");
