@@ -15,13 +15,13 @@ public partial class AdminUsersPageView : UserControl
 
     private void BlockedChanged(object? sender, RoutedEventArgs e)
     {
-        if (DataContext is not AdminUsersPageViewModel vm) return;
-        if (sender is not CheckBox { DataContext: AdminUserListItem userItem }) return;
+        if (sender is not CheckBox { DataContext: AdminUserListItem userItem } checkBox) return;
 
         var user = MainWindowViewModel.db.Users.FirstOrDefault(x => x.Id == userItem.Id);
         if (user == null) return;
 
-        user.IsBlocked = userItem.IsBlocked;
+        user.IsBlocked = checkBox.IsChecked == true;
+        userItem.IsBlocked = user.IsBlocked;
         MainWindowViewModel.db.SaveChanges();
     }
 }

@@ -27,6 +27,11 @@
               <CheckBox IsChecked="{Binding IsBlocked, Mode=TwoWay}" IsThreeState="False" Checked="BlockedChanged" Unchecked="BlockedChanged"/>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
+          <DataGridTemplateColumn.CellEditingTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding IsBlocked, Mode=TwoWay}" IsThreeState="False" Checked="BlockedChanged" Unchecked="BlockedChanged"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellEditingTemplate>
         </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
