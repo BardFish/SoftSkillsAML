@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SoftSkillsAML.ViewModels"
+             xmlns:conv="using:SoftSkillsAML.Converters"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="SoftSkillsAML.QuestionDetailsPageView"
+             x:DataType="vm:QuestionDetailsPageViewModel">
+  <UserControl.Resources>
+    <conv:BytesToImageConverter x:Key="BytesToImageConverter"/>
+  </UserControl.Resources>
+
+  <Grid Margin="16" RowDefinitions="Auto,Auto,*,Auto">
+    <TextBlock Text="Задание" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+    <StackPanel Grid.Row="1" Spacing="8" Margin="0,0,0,12">
+      <TextBlock Text="{Binding QuestionText}" TextWrapping="Wrap"/>
+      <Image IsVisible="{Binding Question.HasImage}" Source="{Binding Question.Image, Converter={StaticResource BytesToImageConverter}}" Height="180" Stretch="Uniform"/>
+    </StackPanel>
+
+    <ListBox Grid.Row="2" ItemsSource="{Binding Answers}" SelectedItem="{Binding SelectedAnswer}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Border BorderBrush="#DDD" BorderThickness="1" Padding="8" Margin="0,0,0,8">
+            <StackPanel Spacing="6">
+              <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+              <Image IsVisible="{Binding IsImage}" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}" Height="120" Stretch="Uniform"/>
+            </StackPanel>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="8">
+      <Button Content="Ответить" Command="{Binding SubmitAnswer}"/>
+      <Button Content="Назад" Command="{Binding BackToQuestions}"/>
+    </StackPanel>
+  </Grid>
+</UserControl>
