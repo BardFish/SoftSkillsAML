@@ -9,6 +9,7 @@ namespace SoftSkillsAML.ViewModels
     {
         public int DepartmentId { get; }
         public string DepartmentName { get; }
+        public string DepartmentDescription { get; }
 
         public ObservableCollection<QuestionListItem> Questions { get; }
 
@@ -22,7 +23,9 @@ namespace SoftSkillsAML.ViewModels
         public QuestionsPageViewModel(int departmentId)
         {
             DepartmentId = departmentId;
-            DepartmentName = MainWindowViewModel.db.Departments.First(x => x.Id == DepartmentId).Name;
+            var department = MainWindowViewModel.db.Departments.First(x => x.Id == DepartmentId);
+            DepartmentName = department.Name;
+            DepartmentDescription = department.Description;
             Questions = new ObservableCollection<QuestionListItem>(
                 MainWindowViewModel.db.UserQuestions
                 .Where(x => x.User == CurrentUserId && x.QuestionNavigation.Department == departmentId)
