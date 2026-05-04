@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SoftSkillsAML.ViewModels"
+             xmlns:conv="using:SoftSkillsAML.Converters"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="700"
+             x:Class="SoftSkillsAML.ProfilePageView"
+             x:DataType="vm:ProfilePageViewModel">
+  <UserControl.Resources>
+    <conv:BytesToImageConverter x:Key="BytesToImageConverter"/>
+    <conv:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+    <conv:BoolToBorderBrushConverter x:Key="BoolToBorderBrushConverter"/>
+  </UserControl.Resources>
+  <ScrollViewer>
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+      <TextBlock Text="Личный кабинет" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+      <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+        <Button Content="Сохранить данные" Command="{Binding SaveProfile}"/>
+        <Button Content="Назад к направлениям" Command="{Binding BackToDepartments}"/>
+      </StackPanel>
+      <Border Grid.Row="2" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
+        <StackPanel Spacing="8">
+          <TextBlock Text="Персональные данные" FontSize="16" FontWeight="SemiBold"/>
+          <TextBlock Text="Логин"/><TextBox Text="{Binding User.Login}"/>
+          <TextBlock Text="Дата рождения"/><CalendarDatePicker SelectedDate="{Binding User.Birthday}"/>
+          <TextBlock Text="Пол"/><ComboBox ItemsSource="{Binding Genders}" SelectedItem="{Binding SelectedGender}"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding Name}"/></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+          <TextBlock Text="Смена пароля" FontWeight="SemiBold"/>
+          <TextBox Text="{Binding OldPassword}" Watermark="Старый пароль" PasswordChar="*"/>
+          <TextBox Text="{Binding NewPassword}" Watermark="Новый пароль" PasswordChar="*"/>
+        </StackPanel>
+      </Border>
+      <Border Grid.Row="3" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
+        <StackPanel><TextBlock Text="Уровень софт-скилов" FontSize="16" FontWeight="SemiBold"/>
+          <ItemsControl ItemsSource="{Binding SkillCharts}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><StackPanel Width="240" Margin="6"><TextBlock Text="{Binding Name}"/><lvc:PieChart Series="{Binding Series}" Height="170"/><TextBlock Text="{Binding Percent, StringFormat={}{0}%}" HorizontalAlignment="Center"/></StackPanel></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+        </StackPanel>
+      </Border>
+      <Border Grid.Row="4" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
+        <StackPanel><TextBlock Text="Достижения" FontSize="16" FontWeight="SemiBold"/>
+          <ItemsControl ItemsSource="{Binding Achievements}"><ItemsControl.ItemTemplate><DataTemplate><Border BorderBrush="{Binding IsCompleted, Converter={StaticResource BoolToBorderBrushConverter}}" BorderThickness="2" Margin="0,0,0,8" Padding="8"><StackPanel Orientation="Horizontal" Spacing="12"><Image Width="80" Height="80" Opacity="{Binding IsCompleted, Converter={StaticResource BoolToOpacityConverter}}" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}"/><StackPanel><TextBlock Text="{Binding Name}" FontWeight="Bold"/><TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="700"/></StackPanel></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+        </StackPanel>
+      </Border>
+      <Border Grid.Row="5" BorderBrush="#DDD" BorderThickness="1" Padding="10"><StackPanel><TextBlock Text="Прогресс по направлениям" FontSize="16" FontWeight="SemiBold"/>
+        <ItemsControl ItemsSource="{Binding ProgressCharts}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><StackPanel Width="240" Margin="6"><TextBlock Text="{Binding Name}"/><lvc:PieChart Series="{Binding Series}" Height="170"/><TextBlock Text="{Binding Percent, StringFormat={}{0}%}" HorizontalAlignment="Center"/></StackPanel></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+      </StackPanel></Border>
+    </Grid>
+  </ScrollViewer>
+</UserControl>
