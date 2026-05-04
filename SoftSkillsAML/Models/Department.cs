@@ -11,7 +11,7 @@ public partial class Department
 
     public int Id { get; set; }
 
-    public int Department1 { get; set; }
+    public byte[]? Image { get; set; }
 
     public byte[]? Image { get; set; }
 
