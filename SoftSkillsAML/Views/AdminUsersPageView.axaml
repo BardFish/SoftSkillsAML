@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650"
+             x:Class="SoftSkillsAML.AdminUsersPageView"
+             xmlns:vm="using:SoftSkillsAML.ViewModels"
+             x:DataType="vm:AdminUsersPageViewModel">
+  <Grid Margin="16" RowDefinitions="Auto,Auto,*">
+    <TextBlock Text="Пользователи" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+      <TextBox Watermark="Мин. возраст" Text="{Binding MinAge}" Width="120"/>
+      <TextBox Watermark="Мин. прогресс %" Text="{Binding MinProgress}" Width="140"/>
+      <Button Content="Применить фильтр" Command="{Binding ApplyFilters}"/>
+      <Button Content="Блок/разблок" Command="{Binding ToggleBlock}"/>
+      <Button Content="Профиль игрока" Command="{Binding OpenProfile}"/>
+      <Button Content="Назад" Command="{Binding BackToStat}"/>
+    </StackPanel>
+    <DataGrid Grid.Row="2" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
+        <DataGridTextColumn Header="Возраст" Binding="{Binding Age}"/>
+        <DataGridTextColumn Header="Прогресс, %" Binding="{Binding Progress}"/>
+        <DataGridCheckBoxColumn Header="Заблокирован" Binding="{Binding IsBlocked}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>
