@@ -15,7 +15,25 @@ namespace SoftSkillsAML.ViewModels
         public Department? SelectedDepartment
         {
             get => _selectedDepartment;
-            set => this.RaiseAndSetIfChanged(ref _selectedDepartment, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedDepartment, value);
+                ImageFileName = value == null || value.Image == null || value.Image.Length == 0 ? "Файл не выбран" : "Изображение задано";
+            }
+        }
+
+        string _imageFileName = "Файл не выбран";
+        public string ImageFileName
+        {
+            get => _imageFileName;
+            set => this.RaiseAndSetIfChanged(ref _imageFileName, value);
+        }
+
+        public void SetImage(byte[] imageBytes, string fileName)
+        {
+            if (SelectedDepartment == null) return;
+            SelectedDepartment.Image = imageBytes;
+            ImageFileName = fileName;
         }
 
         public async void Save()

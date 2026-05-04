@@ -9,12 +9,13 @@
   <Grid Margin="16" RowDefinitions="Auto,Auto,*">
     <TextBlock Text="Редактирование направлений" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
     <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+      <Button Content="Выбрать изображение" Click="SelectImageClick"/>
+      <TextBlock VerticalAlignment="Center" Text="{Binding ImageFileName}"/>
       <Button Content="Сохранить" Command="{Binding Save}"/>
       <Button Content="Назад" Command="{Binding Back}"/>
     </StackPanel>
     <DataGrid Grid.Row="2" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}" AutoGenerateColumns="False">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="Номер" Binding="{Binding Department1}"/>
         <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
         <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
       </DataGrid.Columns>
