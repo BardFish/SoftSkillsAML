@@ -10,6 +10,7 @@ namespace SoftSkillsAML.ViewModels
     internal class QuestionDetailsPageViewModel : ViewModelBase
     {
         public Question Question { get; }
+        public string QuestionText => Question.Text;
         public ObservableCollection<Answer> Answers { get; }
 
         Answer? _selectedAnswer;

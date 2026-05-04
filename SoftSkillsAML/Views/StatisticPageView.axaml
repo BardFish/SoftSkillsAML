@@ -14,6 +14,7 @@
         <Button Content="Пользователи" Command="{Binding OpenUsers}"/>
         <Button Content="Добавить задание" Command="{Binding OpenAddQuestion}"/>
         <Button Content="Добавить достижение" Command="{Binding OpenAddAchievement}"/>
+        <Button Content="Направления" Command="{Binding OpenDepartmentsEdit}"/>
         <Button Content="Выйти" Command="{Binding Logout}"/>
       </StackPanel>
 

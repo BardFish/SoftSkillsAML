@@ -13,7 +13,7 @@
 
   <Grid Margin="16" RowDefinitions="Auto,Auto,*,Auto">
     <TextBlock Text="Задание" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
-    <TextBlock Grid.Row="1" Text="{Binding Question.Text}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+    <TextBlock Grid.Row="1" Text="{Binding QuestionText}" TextWrapping="Wrap" Margin="0,0,0,12"/>
 
     <ListBox Grid.Row="2" ItemsSource="{Binding Answers}" SelectedItem="{Binding SelectedAnswer}">
       <ListBox.ItemTemplate>

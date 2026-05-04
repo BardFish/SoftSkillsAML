@@ -10,10 +10,10 @@ namespace SoftSkillsAML.ViewModels
         public int DepartmentId { get; }
         public string DepartmentName { get; }
 
-        public ObservableCollection<UserQuestion> Questions { get; }
+        public ObservableCollection<QuestionListItem> Questions { get; }
 
-        UserQuestion? _selectedQuestion;
-        public UserQuestion? SelectedQuestion
+        QuestionListItem? _selectedQuestion;
+        public QuestionListItem? SelectedQuestion
         {
             get => _selectedQuestion;
             set => this.RaiseAndSetIfChanged(ref _selectedQuestion, value);
@@ -23,21 +23,32 @@ namespace SoftSkillsAML.ViewModels
         {
             DepartmentId = departmentId;
             DepartmentName = MainWindowViewModel.db.Departments.First(x => x.Id == DepartmentId).Name;
-            Questions = new ObservableCollection<UserQuestion>(
+            Questions = new ObservableCollection<QuestionListItem>(
                 MainWindowViewModel.db.UserQuestions
                 .Where(x => x.User == CurrentUserId && x.QuestionNavigation.Department == departmentId)
                 .OrderBy(x => x.QuestionNavigation.Id)
-                .ToList());
+                .ToList()
+                .Select(x => new QuestionListItem
+                {
+                    QuestionId = x.Question,
+                    IsAnswered = x.IsAnswered,
+                    Number = x.QuestionNavigation.NumberInDepartment.ToString()
+                }));
         }
-
-        public string QuestionStatus(UserQuestion uq) => uq.IsAnswered ? "Пройдено" : "Не пройдено";
 
         public void OpenQuestion()
         {
             if (SelectedQuestion == null) return;
-            MainWindowViewModel.Instance.Page = new QuestionDetailsPageView(SelectedQuestion.Question);
+            MainWindowViewModel.Instance.Page = new QuestionDetailsPageView(SelectedQuestion.QuestionId);
         }
 
         public void BackToDepartments() => MainWindowViewModel.Instance.Page = new DepartmentsPageView();
+    }
+
+    internal class QuestionListItem
+    {
+        public int QuestionId { get; set; }
+        public string Number { get; set; } = string.Empty;
+        public bool IsAnswered { get; set; }
     }
 }

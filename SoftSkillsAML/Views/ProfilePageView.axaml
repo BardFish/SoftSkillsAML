@@ -11,6 +11,7 @@
   <UserControl.Resources>
     <conv:BytesToImageConverter x:Key="BytesToImageConverter"/>
     <conv:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+    <conv:BoolToBorderBrushConverter x:Key="BoolToBorderBrushConverter"/>
   </UserControl.Resources>
   <ScrollViewer>
     <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
@@ -37,7 +38,7 @@
       </Border>
       <Border Grid.Row="4" BorderBrush="#DDD" BorderThickness="1" Padding="10" Margin="0,0,0,12">
         <StackPanel><TextBlock Text="Достижения" FontSize="16" FontWeight="SemiBold"/>
-          <ItemsControl ItemsSource="{Binding Achievements}"><ItemsControl.ItemTemplate><DataTemplate><Border BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,8" Padding="8"><StackPanel Orientation="Horizontal" Spacing="12"><Image Width="80" Height="80" Opacity="{Binding IsCompleted, Converter={StaticResource BoolToOpacityConverter}}" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}"/><StackPanel><TextBlock Text="{Binding Name}" FontWeight="Bold"/><TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="700"/><TextBlock Text="{Binding Status, StringFormat=Статус: {0}}"/></StackPanel></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+          <ItemsControl ItemsSource="{Binding Achievements}"><ItemsControl.ItemTemplate><DataTemplate><Border BorderBrush="{Binding IsCompleted, Converter={StaticResource BoolToBorderBrushConverter}}" BorderThickness="2" Margin="0,0,0,8" Padding="8"><StackPanel Orientation="Horizontal" Spacing="12"><Image Width="80" Height="80" Opacity="{Binding IsCompleted, Converter={StaticResource BoolToOpacityConverter}}" Source="{Binding Image, Converter={StaticResource BytesToImageConverter}}"/><StackPanel><TextBlock Text="{Binding Name}" FontWeight="Bold"/><TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="700"/></StackPanel></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
         </StackPanel>
       </Border>
       <Border Grid.Row="5" BorderBrush="#DDD" BorderThickness="1" Padding="10"><StackPanel><TextBlock Text="Прогресс по направлениям" FontSize="16" FontWeight="SemiBold"/>

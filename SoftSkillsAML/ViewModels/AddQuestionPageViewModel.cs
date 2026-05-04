@@ -26,6 +26,9 @@ namespace SoftSkillsAML.ViewModels
         string _questionText = string.Empty;
         public string QuestionText { get => _questionText; set => this.RaiseAndSetIfChanged(ref _questionText, value); }
 
+        int _questionNumber;
+        public int QuestionNumber { get => _questionNumber; set => this.RaiseAndSetIfChanged(ref _questionNumber, value); }
+
         public AddQuestionPageViewModel() { AddAnswer(); AddAnswer(); }
 
         public void SetQuestionImage(byte[] bytes, string fileName) { QuestionImageBytes = bytes; QuestionImageName = fileName; }
@@ -58,7 +61,7 @@ namespace SoftSkillsAML.ViewModels
                 await MessageBoxManager.GetMessageBoxStandard("Ошибка", "Добавьте минимум два варианта ответа", ButtonEnum.Ok, Icon.Info).ShowAsync(); return;
             }
 
-            var question = new Question { Text = QuestionText, Department = SelectedDepartment.Id, HasImage = QuestionImageBytes.Length > 0, Image = QuestionImageBytes.Length > 0 ? QuestionImageBytes : null };
+            var question = new Question { Text = QuestionText, Department = SelectedDepartment.Id, NumberInDepartment = QuestionNumber, HasImage = QuestionImageBytes.Length > 0, Image = QuestionImageBytes.Length > 0 ? QuestionImageBytes : null };
             MainWindowViewModel.db.Questions.Add(question); MainWindowViewModel.db.SaveChanges();
 
             foreach (var answerDraft in filledAnswers)
@@ -74,7 +77,7 @@ namespace SoftSkillsAML.ViewModels
             }
 
             await MessageBoxManager.GetMessageBoxStandard("Успех", "Задание с вариантами ответов добавлено", ButtonEnum.Ok, Icon.Success).ShowAsync();
-            QuestionText = string.Empty; QuestionImageBytes = []; QuestionImageName = "Файл не выбран"; Answers.Clear(); AddAnswer(); AddAnswer();
+            QuestionText = string.Empty; QuestionNumber = 0; QuestionImageBytes = []; QuestionImageName = "Файл не выбран"; Answers.Clear(); AddAnswer(); AddAnswer();
         }
 
         public void BackToStat() => MainWindowViewModel.Instance.Page = new StatisticPageView();

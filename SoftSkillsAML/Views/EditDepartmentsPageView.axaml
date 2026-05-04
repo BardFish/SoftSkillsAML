@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="SoftSkillsAML.EditDepartmentsPageView"
+             xmlns:vm="using:SoftSkillsAML.ViewModels"
+             x:DataType="vm:EditDepartmentsPageViewModel">
+  <Grid Margin="16" RowDefinitions="Auto,Auto,*">
+    <TextBlock Text="Редактирование направлений" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+      <Button Content="Сохранить" Command="{Binding Save}"/>
+      <Button Content="Назад" Command="{Binding Back}"/>
+    </StackPanel>
+    <DataGrid Grid.Row="2" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}" AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Номер" Binding="{Binding Department1}"/>
+        <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+        <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>

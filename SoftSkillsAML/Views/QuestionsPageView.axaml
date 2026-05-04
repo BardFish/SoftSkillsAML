@@ -19,8 +19,8 @@
         <DataTemplate>
           <Border BorderBrush="#DDD" BorderThickness="1" Padding="8" Margin="6">
             <StackPanel Width="390">
-              <TextBlock Text="{Binding QuestionNavigation.Text}" TextWrapping="Wrap"/>
-              <TextBlock Text="{Binding IsAnswered, StringFormat=Статус: {0}}"/>
+              <TextBlock Text="{Binding Number}" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding IsAnswered, StringFormat=Пройдено: {0}}"/>
             </StackPanel>
           </Border>
         </DataTemplate>

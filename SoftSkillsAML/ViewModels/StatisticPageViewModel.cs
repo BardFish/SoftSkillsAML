@@ -63,6 +63,7 @@ namespace SoftSkillsAML.ViewModels
         public void OpenUsers() => MainWindowViewModel.Instance.Page = new AdminUsersPageView();
         public void OpenAddQuestion() => MainWindowViewModel.Instance.Page = new AddQuestionPageView();
         public void OpenAddAchievement() => MainWindowViewModel.Instance.Page = new AddAchievementPageView();
+        public void OpenDepartmentsEdit() => MainWindowViewModel.Instance.Page = new EditDepartmentsPageView();
         public void Logout() { CurrentUserId = 0; MainWindowViewModel.Instance.Page = new AuthPageView(); }
     }
 }
